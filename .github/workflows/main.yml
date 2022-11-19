@@ -1,0 +1,121 @@
+name: Build libs
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build-episodic:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build episodic
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+      run: |
+        ./deploy96.sh episodic 1.03 "Half-Life 2 EP1,2"
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ep1 ep2
+        path: ./apk
+        if-no-files-found: error
+        
+  build-hl2mp:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build hl2mp
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+      run: |
+        ./deploy96.sh hl2mp 1.03 "Half-Life 2: Deathmatch" extras_dir.vpk 3
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+     - uses: actions/upload-artifact@v3
+      with:
+        name: hl2dm
+        path: ./apk
+        if-no-files-found: error
+        
+  build-hl1:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build hl1
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+      run: |
+        ./deploy96.sh hl1 1.03 "Half-Life: Source" extras_dir.vpk 4
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+    - uses: actions/upload-artifact@v3
+      with:
+        name: hls
+        path: ./apk
+        if-no-files-found: error
+        
+  build-cstrike:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build cstrike
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+      run: |
+        ./deploy96.sh cstrike 1.06 "Counter-Strike: Source" extras_dir.vpk 7
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+    - uses: actions/upload-artifact@v3
+      with:
+        name: css
+        path: ./apk
+        if-no-files-found: error
+
+  build-portal:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build portal
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+      run: |
+        ./deploy96.sh portal 1.02 "Portal" extras_dir.vpk 5
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+
+  build-dod:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build DoD
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        SSH_PASS: ${{ secrets.SSH_PASS }}
+      run: |
+        ./deploy96.sh dod 1.03 "Day of Defeat: Source" extras_dir.vpk 6
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+        pwd
+        ls
+    - uses: actions/upload-artifact@v3
+      with:
+        name: dods
+        path: ./apk
+        if-no-files-found: error
