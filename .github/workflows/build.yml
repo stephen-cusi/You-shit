@@ -1,4 +1,4 @@
-name: aarch64-x86&64
+name: build-game-android-all
 
 on:
   push:
@@ -9,82 +9,87 @@ on:
       - "*"
 
 jobs:
-  hl2-ep1-2:
-    runs-on: ubuntu-latest
+ ep:
+   runs-on: ubuntu-latest
 
+   steps:
    - uses: actions/checkout@v3
-   - name: hl2-ep1-ep2
+   - name: Episode,1,2
      run: |
        ./deploy96.sh episodic 1.03 "Half-Life 2 EP1,2"
    - uses: actions/upload-artifact@v3
      with:
-       name: ep1 2
+       name: hl2ep1
        path: *.apk
        if-no-files-found: error
-       
+
   hl2dm:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests-hlsdm_ver-android
+      run: |
+        ./deploy96.sh hl2mp 1.03 "Half-Life 2: Deathmatch" extras_dir.vpk 3
+    - uses: actions/upload-artifact@v3
+      with:
+        name: hl2dm
+        path: *.apk
+        if-no-files-found: error
 
-   - uses: actions/checkout@v3
-   - name: hl2dm
-     run: |
-       ./deploy96.sh hl2mp 1.03 "Half-Life 2: Deathmatch" extras_dir.vpk 3
-   - uses: actions/upload-artifact@v3
-     with:
-       name: hl2dm
-       path: *.apk
-       if-no-files-found: error
-       
   hls:
     runs-on: ubuntu-latest
 
-   - uses: actions/checkout@v3
-   - name: Run tests-x86_ver-android
-     run: |
-       ./deploy96.sh hl1 1.03 "Half-Life: Source" extras_dir.vpk 4
-   - uses: actions/upload-artifact@v3
-     with:
-       name: hls
-       path: *.apk
-       if-no-files-found: error
-       
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests-portal_ver-android
+      run: |
+        ./deploy96.sh hl1 1.03 "Half-Life: Source" extras_dir.vpk 4
+    - uses: actions/upload-artifact@v3
+      with:
+        name: hls
+        path: *.apk
+        if-no-files-found: error
+
   css:
     runs-on: ubuntu-latest
 
-   - uses: actions/checkout@v3
-   - name: cstrike
-     run: |
-       ./deploy96.sh cstrike 1.06 "Counter-Strike: Source" extras_dir.vpk 7
-   - uses: actions/upload-artifact@v3
-     with:
-       name: css
-       path: *.apk
-       if-no-files-found: error
-       
-  Portal:
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests-armv7a-android
+      run: |
+        ./deploy96.sh cstrike 1.06 "Counter-Strike: Source" extras_dir.vpk 7
+    - uses: actions/upload-artifact@v3
+      with:
+        name: css
+        path: *.apk
+        if-no-files-found: error
+
+  portal:
     runs-on: ubuntu-latest
 
-   - uses: actions/checkout@v3
-   - name: Portal
-     run: |
-       ./deploy96.sh portal 1.02 "Portal" extras_dir.vpk 5
-   - uses: actions/upload-artifact@v3
-     with:
-       name: Porta       
-       path: *.apk
-       if-no-files-found: error
-       
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests-armv7a-android
+      run: |
+        ./deploy96.sh portal 1.02 "Portal" extras_dir.vpk 5
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Portal
+        path: *.apk
+        if-no-files-found: error
+
   dods:
     runs-on: ubuntu-latest
 
-   - uses: actions/checkout@v3
-   - name: slzr
-     run: |
-       ./deploy96.sh dod 1.03 "Day of Defeat: Source" extras_dir.vpk 6
-       ls
-       pwd
-   - uses: actions/upload-artifact@v3
-     with:
-       name: dods
-       path: *.apk
-       if-no-files-found: error
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests-armv7a-android
+      run: |
+        ./deploy96.sh dod 1.03 "Day of Defeat: Source" extras_dir.vpk 6
+    - uses: actions/upload-artifact@v3
+      with:
+        name: dods
+        path: *.apk
+        if-no-files-found: error
+
+#Thanks for the help of the legendary guard
