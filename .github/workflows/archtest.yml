@@ -1,4 +1,4 @@
-name: Build libs
+name: arch-test
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         SSH_PASS: ${{ secrets.SSH_PASS }}
       run: |
-        ./hl1.sh
+        ./hls.sh
         mkdir apk
         find ./build -name "*.apk" -exec mv -t ./build1 {} +
     - uses: actions/upload-artifact@v3
@@ -38,7 +38,7 @@ jobs:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         SSH_PASS: ${{ secrets.SSH_PASS }}
       run: |
-        ./hl1-x86_64.sh
+        ./hls-x86_64.sh
         mkdir apk
         find ./build -name "*.apk" -exec mv -t ./build1 {} +
     - uses: actions/upload-artifact@v3
