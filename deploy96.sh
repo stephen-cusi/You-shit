@@ -75,6 +75,3 @@ git clone --depth 1 https://github.com/nillerusr/srceng-mod-launcher
 	fi
 
 	ant debug &&
-
-#}
-
