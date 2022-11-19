@@ -100,3 +100,18 @@ jobs:
         name: dods
         path: ./apk
         if-no-files-found: error
+
+  hl2dm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests-hlsdm_ver-android
+      run: |
+        ./deploy96.sh hl2mp 1.03 "Half-Life 2: Deathmatch" extras_dir.vpk 3
+        mkdir apk
+        find ./build -name "*.apk" -exec mv -t ./build1 {} +
+    - uses: actions/upload-artifact@v3
+      with:
+        name: hl2dm
+        path: ./apk
+        if-no-files-found: error
