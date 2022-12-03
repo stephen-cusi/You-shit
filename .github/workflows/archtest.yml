@@ -36,7 +36,7 @@ jobs:
         #fix
         cd source-engine
         mkdir lib
-        ./waf configure -T release --android=x86,host,21 -8 --prefix=android/ --togles --build-game=hl1 --use-ccache --disable-warns || (cat build/config.log;exit)
+        ./waf configure -T release --android=aarch64,host,21 -8 --prefix=android/ --togles --build-game=hl1 --use-ccache --disable-warns || (cat build/config.log;exit)
         ./waf install --target=client,server --destdir=lib || exit
         #
         #
@@ -76,7 +76,7 @@ jobs:
         cd source-engine
         ./waf configure -T release --android=aarch64,host,21 -8 --prefix=android/ --togles --build-game=hl1 --use-ccache --disable-warns || (cat build/config.log;exit)
         ./waf install --target=client,server || exit
-        mkdir -p ../libs/hl1
+        #
         cp android/lib/arm64-v8a/libserver.so ../libs/hl1/
         cp android/lib/arm64-v8a/libclient.so ../libs/hl1/
         rm -rf android/
