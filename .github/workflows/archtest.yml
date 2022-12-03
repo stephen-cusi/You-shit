@@ -39,13 +39,13 @@ jobs:
         ./waf configure -T release --android=x86,host,21 -8 --prefix=android/ --togles --build-game=hl1 --use-ccache --disable-warns || (cat build/config.log;exit)
         ./waf install --target=client,server --destdir=lib || exit
         #
-        mkdir library
+        #
         rm -rf android/
-        find lib -name "*.so" -exec mv -t ./library {} +
+        #
     - uses: actions/upload-artifact@v3
       with:
         name: hls x86
-        path: ./library
+        path: ./lib
         if-no-files-found: error
         
   build-hl1:
