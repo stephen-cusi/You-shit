@@ -40,12 +40,12 @@ jobs:
         ./waf install --target=client,server --destdir=lib || exit
         #
         #
-        rm -rf android/
+        #rm -rf android/
         #
     - uses: actions/upload-artifact@v3
       with:
         name: hls x86
-        path: lib
+        path: ./android
         if-no-files-found: error
         
   build-hl1:
