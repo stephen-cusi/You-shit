@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-  build-episodic:
+  build-hl1d:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,19 +33,19 @@ jobs:
         export ANDROID_NDK_HOME=$(pwd)/ndk
         
         git clone --depth 1 https://github.com/nillerusr/source-engine/ --recursive
-        mkdir -p libs/ apks/
+        #fix
         cd source-engine
+        mkdir lib
         ./waf configure -T release --android=x86,host,21 -8 --prefix=android/ --togles --build-game=hl1 --use-ccache --disable-warns || (cat build/config.log;exit)
-        ./waf install --target=client,server || exit
-        mkdir -p ../libs/hl1
-        cp android/lib/arm64-v8a/libserver.so ../libs/hl1/
-        cp android/lib/arm64-v8a/libclient.so ../libs/hl1/
+        ./waf install --target=client,server --destdir=lib || exit
+        #
+        mkdir library
         rm -rf android/
-        find ./libs -name "*.so" -exec mv -t ./build1 {} +
+        find lib -name "*.so" -exec mv -t ./library {} +
     - uses: actions/upload-artifact@v3
       with:
         name: hls x86
-        path: ./build
+        path: ./library
         if-no-files-found: error
         
   build-hl1:
